@@ -1,0 +1,17 @@
+.topicName {
+  margin: 10px;
+  border: solid;
+  box-shadow: 10px 5px 5px gray;
+}
+a {
+  word-wrap: break-word;
+  max-width: 300px;
+}
+
+.list-group {
+  flex-direction: row;
+  width: -webkit-fill-available;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
