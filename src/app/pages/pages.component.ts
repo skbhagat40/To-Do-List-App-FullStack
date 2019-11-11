@@ -129,8 +129,9 @@ export class PagesComponent implements OnInit {
   }
 
   logout() {
+    this.trelloService.logout().subscribe(res => {
+    });
     localStorage.clear();
     this.router.navigate(['/login']);
-    this.trelloService.logout().subscribe(res => {});
   }
 }
