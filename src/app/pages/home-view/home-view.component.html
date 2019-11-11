@@ -1,12 +1,72 @@
 <div class="container container-fluid">
-  <div class="row">
+  <div class="row" style="flex-direction: column">
     <h3 style="margin: auto;">{{dataToDisplay?.title}}</h3>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;"
+         *ngIf="dataToDisplay && dataToDisplay.subtopics">
+      <div style="flex-basis: 45%;"
+           *ngFor="let subtopic of dataToDisplay.subtopics; let i = index;">
+        <div style="margin-top: 20px;">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="flex-basis: 50%;">
+                    <h4>
+                      <input class="text-input" [(ngModel)]="subtopic.title"
+                             [ngStyle]="{textDecoration: subtopic.status ? 'line-through': 'none'}"
+                             [readOnly]="!subtopic['edit']"
+                             (keyup.enter)="updateSubTopicText(subtopic)" (keydown.enter)="updateSubTopicText(subtopic)"
+                             autofocus #inpt>
+                    </h4>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; flex-basis: 25%;">
+                    <mat-checkbox [checked]="subtopic.status" (click)="updateSubTopicStatus(subtopic)"></mat-checkbox>
+                    <mat-icon style="cursor: pointer" (click)="subtopic['edit'] = true; inpt.focus()">border_color
+                    </mat-icon>
+                    <button class="btn btn-danger" (click)="deleteSubTopic(subtopic)">X</button>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+            <ul class="list-group" cdkDropList (cdkDropListDropped)="drop($event, subtopic.items)">
+              <li *ngFor="let item of subtopic.items" class="list-group-item" style="width: 100%; cursor: move;" cdkDrag>
+                <div *ngIf="item.description"
+                     style="display: flex; justify-content: space-between; align-items: center">
+                  <input class="text-input" [(ngModel)]="item.description"
+                         [ngStyle]="{textDecoration: item.status ? 'line-through': 'none'}" [readOnly]="!item['edit']"
+                         (keyup.enter)="updateItemText(item)" (keydown.enter)="updateItemText(item)" autofocus #inpt>
+                  <div style="display: flex; align-items: center; justify-content: space-between; flex-basis: 40%;"
+                       (focusout)="item['edit']=false;">
+                    <mat-checkbox [checked]="item.status" (click)="updateStatus(item)"></mat-checkbox>
+                    <mat-icon style="cursor: pointer" (click)="item['edit']=true; inpt.focus();">border_color</mat-icon>
+                    <button class="btn btn-danger float-right" style="margin: 10px" (click)="deleteItem(item)">X
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div *ngIf="subtopics[i]" style="display: flex">
+              <input type="text" class="form-control" placeholder="Enter Item.."
+                     (keyup.enter)="submitItem(subtopic, $event.target.value, i)"
+                     (keydown.enter)="submitItem(subtopic, $event.target.value, i)" required>
+              <button class="btn btn-primary float-right" (click)="subtopics[i]=false">X</button>
+            </div>
+            <button class="btn btn-success" (click)=addItem(i)>+ Add Item</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
+  <div style="margin-top: 20px">
     <button class="btn btn-success" (click)="addSubTopic()" style="margin: auto;">+ Add Subtopic</button>
   </div>
   <div class="row" style="margin-top: 20px;">
-    <button mat-button class="mat-button" color="primary" style="background: yellow; margin: auto;" (click)="onBackClick()">Back</button>
-</div>
+    <p>*Hint Drag List Items To Change Their Order</p>
+    <button mat-button class="mat-button" color="primary" style="background: yellow; margin: auto;"
+            (click)="onBackClick()">Back
+    </button>
+  </div>
 </div>
 

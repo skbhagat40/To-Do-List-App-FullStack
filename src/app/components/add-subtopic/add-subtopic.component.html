@@ -1,0 +1,9 @@
+<form class="form" #myForm = "ngForm">
+  <label class="label">Title</label>
+  <input class="input" type="text" [(ngModel)]="title" required name="name">
+  <div *ngIf="myForm.invalid && (myForm.dirty || myForm.touched)"
+    class="alert alert-danger">
+    This Field is Required..
+  </div>
+  <button class="btn btn-primary" [disabled]="myForm.invalid" style="margin-top: 20px" (click)="submit()">Submit</button>
+</form>

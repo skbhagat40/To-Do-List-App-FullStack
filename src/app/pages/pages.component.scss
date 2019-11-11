@@ -1,3 +1,4 @@
+@import '../pages/home-view/home-view.component';
 .topicName {
   margin: 10px;
   border: solid;
@@ -15,3 +16,6 @@ a {
   justify-content: space-between;
 }
 
+.form-control {
+  cursor: pointer;
+}

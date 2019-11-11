@@ -1,0 +1,27 @@
+<div class="container container-fluid">
+  <div class="row">
+    <h3>Register</h3>
+  </div>
+  <form class="form-group" [formGroup]="registerForm">
+    <label class="label">
+      User Name
+    </label>
+    <input class="form-control" formControlName="username" placeholder="Enter Username..." type="text">
+    <div *ngIf="registerForm.get('username').errors">
+      <div class="alert alert-danger">
+        This Filed Is Required
+      </div>
+    </div>
+    <label class="label">Password</label>
+    <input type="password" class="form-control" formControlName="password">
+    <div *ngIf="registerForm.get('password').errors">
+      <div class="alert alert-danger">
+          This Field Is Required
+      </div>
+    </div>
+  </form>
+  <button class="btn btn-success" [disabled]="registerForm.invalid" (click)="register()">Register</button>
+</div>
+<footer style="text-align: center">
+  <a routerLink="/login">Login</a>
+</footer>
